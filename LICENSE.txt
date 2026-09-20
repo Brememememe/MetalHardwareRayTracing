@@ -1,0 +1,20 @@
+MetalHardwareRayTracing (MHRT)
+Copyright (c) 2026 Brememememe (Ruchit). All rights reserved.
+
+You may download this mod and use it to play Minecraft on your own machines,
+for as many people as you like, free of charge.
+
+You may not, without written permission from the copyright holder:
+
+  * republish, mirror or redistribute the jar, the dylib, the shader or any
+    part of them, anywhere, including in a modpack or a launcher;
+  * decompile, disassemble or otherwise reverse engineer any part of it, or
+    publish the result of doing so;
+  * copy any part of its code, its shader or its design into another project,
+    whether or not that project is free;
+  * sell it, or charge for access to it.
+
+Permission is normally given for asking. Open an issue.
+
+No warranty of any kind. It replaces your game's renderer; if it breaks your
+game, remove the jar and the game is as it was.
