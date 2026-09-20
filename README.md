@@ -128,7 +128,7 @@ defaults):
 | `mhrt-nomotion` | reproject by the camera alone, as it did before 1.40.0 |
 | `Shaders.metal`, `libmhrt.dylib` | override what the jar carries (the jar ships the shader compiled) |
 
-## Known limits, honestly
+## Known limits
 
 * **macOS and Apple Silicon only.** Always.
 * **A self-shadowing model reads darker than Minecraft draws it.** An end
@@ -158,7 +158,7 @@ black screen, and that line is usually the whole answer.
 ## Licence
 
 All rights reserved. You may download it and play with it; please do not
-mirror, repackage or fork it without asking first. Asking usually works.
+mirror, repackage or fork it without asking first.
 
 ## Source
 
