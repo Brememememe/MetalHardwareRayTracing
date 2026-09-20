@@ -16,8 +16,8 @@ and drop it in your instance's `mods/` folder with Fabric API. That is the whole
 install - the Metal core and the shader ride inside the jar and unpack
 themselves on first run.
 
-    mhrt-1.41.0.jar        Minecraft 26.2
-    mhrt-1.41.0+26.3.jar   Minecraft 26.3
+    mhrt-1.42.0+26.2.jar   Minecraft 26.2
+    mhrt-1.42.0+26.3.jar   Minecraft 26.3
 
 ## What you need
 
