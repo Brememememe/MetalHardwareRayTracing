@@ -1,0 +1,60 @@
+name: Bug report
+description: Something renders wrong, crashes, or runs badly
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before anything else: if MHRT hit something it could not handle it turns
+        itself off and prints why. Search your log for lines beginning with
+        `[mhrt]` - that line is usually the whole answer, and it is the single
+        most useful thing you can paste here.
+
+        The log is at `<your instance>/minecraft/logs/latest.log`.
+  - type: input
+    id: version
+    attributes:
+      label: MHRT version
+      description: The jar's name, or the version shown in Mod Menu.
+      placeholder: "1.40.0+26.3"
+    validations:
+      required: true
+  - type: dropdown
+    id: mc
+    attributes:
+      label: Minecraft version
+      options: ["26.3", "26.2", "other (say which below)"]
+    validations:
+      required: true
+  - type: input
+    id: mac
+    attributes:
+      label: Mac and chip
+      description: Apple menu > About This Mac.
+      placeholder: "MacBook Pro, M4 Pro, macOS 27.0"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens
+      description: What you did, what you saw, and what you expected instead. A screenshot is worth a lot here.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: The [mhrt] lines from your log
+      description: Paste them, or attach latest.log. `grep mhrt latest.log` gets them all.
+      render: text
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checked already
+      options:
+        - label: Fabric API is installed and only ONE MHRT jar is in the mods folder
+        - label: The jar matches my Minecraft version (26.2 jar for 26.2, 26.3 jar for 26.3)
+        - label: No shaderpack, and no other mod that draws the world (Sodium-likes, Flywheel/Vanillin)
+        - label: It still happens with only Fabric API and MHRT installed
