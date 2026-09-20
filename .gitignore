@@ -1,0 +1,7 @@
+# Nothing built, nothing local, and above all no source.
+out/
+build/
+*.class
+*.dylib
+cp.txt
+.DS_Store
