@@ -19,23 +19,6 @@ themselves on first run.
     mhrt-1.41.0.jar        Minecraft 26.2
     mhrt-1.41.0+26.3.jar   Minecraft 26.3
 
-## New in 1.41.0
-
-**Every cow gets its own model.** A renderer that keeps more than one model -
-every adult-and-baby pair, and every variant renderer: cow, pig, chicken, the
-fishes - picks between them *inside* its submit, by assigning its own `model`
-field. MHRT asked for the model before that had happened, so it got back
-whichever one was used last, for some other animal entirely. The texture was
-always right, because that comes from the render state, so a warm cow was drawn
-with the temperate cow's cubes and its own skin stretched over them - which puts
-the texture on the wrong parts and reads as missing. Whichever cow the game drew
-last decided which cows looked wrong, which is why it was only ever *some* of
-them. Proved by logging which model object each cow was handed: one shared
-object before, four distinct ones after.
-
-Also new: the settings are reached from **Options > Video Settings**, scroll to
-the bottom.
-
 ## What you need
 
 * **macOS on Apple Silicon.** Nothing else - there is no Windows or Linux build
