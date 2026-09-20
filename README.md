@@ -1,6 +1,6 @@
 # MetalHardwareRayTracing
 
-**by Brememememe (Ruchit)**
+**by Brememememe (Ruchit) YouTube: https://www.youtube.com/@RuchitBreme**
 
 Real hardware ray tracing for Minecraft Java, written in Metal for Apple
 Silicon. Not a shaderpack: Minecraft's world rasteriser is switched off and the
