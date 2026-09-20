@@ -33,34 +33,34 @@ last decided which cows looked wrong, which is why it was only ever *some* of
 them. Proved by logging which model object each cow was handed: one shared
 object before, four distinct ones after.
 
-Also new: the settings are reached from **Options ‚Üí Video Settings**, scroll to
+Also new: the settings are reached from **Options > Video Settings**, scroll to
 the bottom.
 
 ## What you need
 
-* **macOS on Apple Silicon.** Nothing else ‚Äî there is no Windows or Linux build
+* **macOS on Apple Silicon.** Nothing else - there is no Windows or Linux build
   and there cannot be; it is Metal all the way down.
 * **A GPU that reports Metal ray tracing.** M3 and later have it in hardware.
   Built and measured on an M4 Pro; on earlier chips it will run far slower if it
   runs at all, and it tells you in the log rather than crashing.
 * **Fabric Loader 0.16+ and Fabric API.**
-* **Minecraft 26.2 or 26.3** ‚Äî one jar each, and they are not interchangeable.
+* **Minecraft 26.2 or 26.3** - one jar each, and they are not interchangeable.
   The wrong one refuses to load rather than breaking your game.
 
 ## What it draws
 
 * **Sunlight and sky light** traced, with real shadows that come from the
-  geometry itself ‚Äî soft edges, contact shadows, no shadow map, no cascades and
+  geometry itself - soft edges, contact shadows, no shadow map, no cascades and
   none of the peter-panning that goes with them.
 * **Bounced indirect light.** Colour carries: a red wool floor puts red into the
   ceiling above it. Traced at a quarter of the pixels and upsampled.
 * **Reflections** in water, glass, ice and polished metals, of the real world
-  rather than a screen-space copy of it ‚Äî things off the edge of the screen and
+  rather than a screen-space copy of it - things off the edge of the screen and
   behind you are in the reflection because they are actually traced.
 * **Water with a depth to it**, refraction through glass, stained glass that
   tints the light passing through it, and Snell's window from underneath.
 * **Every block light at once.** Torches, lava, glowstone, froglights, a
-  furnace's fire ‚Äî each with its own colour and falloff, sampled rather than
+  furnace's fire - each with its own colour and falloff, sampled rather than
   baked into a lightmap.
 * **Beacon beams** integrated along the ray, so the beam actually lights what
   it passes.
@@ -76,14 +76,14 @@ the bottom.
   chest lid and a dropped item are converged the way the ground they stand on
   is, rather than being shown at close to a single traced sample. Measured on a
   crystal filling the frame, it moves 2.1 times as much between frames as it
-  did ‚Äî which is the damping coming off.
+  did - which is the damping coming off.
 * **Grass, leaves and flowers that do not turn into an LOD.** A cut-out texture
   is read at full resolution however far away it is, so distant grass is the
   same blade, the same colour and the same thinness as the grass at your feet
   rather than a dark, fat smudge - and a plant's shadow is the shape of the
   plant, not of the rectangle its texture is painted on.
 * **Pack textures at their own resolution**, connected textures, animated
-  blocks, block entities ‚Äî chests that open, signs you can read, banners.
+  blocks, block entities - chests that open, signs you can read, banners.
 * **The Nether and the End** with their own skies, and the End's flash.
 
 The picture is denoised with a temporal pass and a wavelet filter, then
@@ -100,18 +100,18 @@ displays and lightning are drawn by Minecraft too.
 ## Performance
 
 On an M4 Pro at 1080p, a normal overworld sits around 9 to 12 ms of tracing a
-frame at 70‚Äì85% render scale, which leaves the frame rate at whatever your
+frame at 70-85% render scale, which leaves the frame rate at whatever your
 display allows. Two knobs matter most:
 
 * **Resolution**, in those panes. The traced picture is rendered below your
   display's resolution and upsampled; this is the frame-time dial.
-* **Minecraft's render distance.** Ray tracing is bounded ‚Äî 10 to 12 chunks
+* **Minecraft's render distance.** Ray tracing is bounded - 10 to 12 chunks
   matches what is traced. Setting Minecraft higher costs you frames for terrain
   the tracer is not using.
 
 ## Settings
 
-**Options ‚Üí Video Settings**, then scroll to the bottom: under a **Metal ray
+**Options > Video Settings**, then scroll to the bottom: under a **Metal ray
 tracing** header there is an **MHRT settings...** button. That opens the panes:
 quality preset, resolution, bounces, denoising, shadows, the colour grade,
 lights, and how many entities are traced a frame.
@@ -134,8 +134,8 @@ defaults):
   crystal's lattice shadows its own core; Minecraft's flat lightmap never does,
   so it measures a few per cent darker here. That is the tracer being right
   rather than wrong, but it is a visible difference.
-* **A model that changes shape loses its motion for a single frame** ‚Äî a mob
-  drawing its sword, armour going on ‚Äî because the parts it is built from shift
+* **A model that changes shape loses its motion for a single frame** - a mob
+  drawing its sword, armour going on - because the parts it is built from shift
   and there is no longer any telling which was which.
 * **The traced range is bounded**, because acceleration structures cost memory:
   32 chunks in every direction is over 3 GB.
