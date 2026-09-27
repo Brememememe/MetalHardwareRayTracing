@@ -1,5 +1,7 @@
 # MetalHardwareRayTracing
 
+![Ray tracing in Minecraft on Mac - MHRT, Metal Hardware Ray Tracing](banner.jpg)
+
 **by Brememememe (Ruchit) YouTube: https://www.youtube.com/@RuchitBreme**
 
 Real hardware ray tracing for Minecraft Java, written in Metal for Apple
