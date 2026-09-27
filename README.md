@@ -18,8 +18,8 @@ and drop it in your instance's `mods/` folder with Fabric API. That is the whole
 install - the Metal core and the shader ride inside the jar and unpack
 themselves on first run.
 
-    mhrt-1.42.0+26.2.jar   Minecraft 26.2
-    mhrt-1.42.0+26.3.jar   Minecraft 26.3
+    mhrt-1.43.0+26.2.jar   Minecraft 26.2
+    mhrt-1.43.0+26.3.jar   Minecraft 26.3
 
 ## What you need
 
@@ -94,6 +94,18 @@ display allows. Two knobs matter most:
   matches what is traced. Setting Minecraft higher costs you frames for terrain
   the tracer is not using.
 
+**Portals.** Minecraft's loading screen after a portal waits until its own
+renderer has built the ground you arrive on. When MHRT is drawing the whole
+world itself - on 26.3 with its Vulkan graphics backend, which MHRT cannot share
+depth with, and on 26.2 with *Minecraft effects* switched off - that renderer is
+not running, so the screen used to sit out its full thirty-second timeout on
+every crossing. Ray tracing now steps aside for the crossing - Nether portal,
+End portal, or a command that changes dimension - and comes back about half a
+second after you step through. The traced world then fills in around you over
+the next ten to twenty seconds. Where Minecraft's renderer is still running
+underneath (26.2 or OpenGL with Minecraft effects on), the screen was never
+stuck, and nothing changes.
+
 ## Settings
 
 **Options > Video Settings**, then scroll to the bottom: under a **Metal ray
@@ -110,6 +122,7 @@ defaults):
 | `mhrt-noentities` | hand every entity back to Minecraft |
 | `mhrt-nocushions` | cushions only |
 | `mhrt-nomotion` | reproject by the camera alone, as it did before 1.40.0 |
+| `mhrt-noportalpause` | keep ray tracing on through a portal, as it did before 1.43.0 |
 | `Shaders.metal`, `libmhrt.dylib` | override what the jar carries (the jar ships the shader compiled) |
 
 ## Known limits
