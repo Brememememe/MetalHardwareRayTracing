@@ -18,8 +18,8 @@ and drop it in your instance's `mods/` folder with Fabric API. That is the whole
 install - the Metal core and the shader ride inside the jar and unpack
 themselves on first run.
 
-    mhrt-1.43.0+26.2.jar   Minecraft 26.2
-    mhrt-1.43.0+26.3.jar   Minecraft 26.3
+    mhrt-1.44.0+26.2.jar   Minecraft 26.2
+    mhrt-1.44.0+26.3.jar   Minecraft 26.3
 
 ## What you need
 
@@ -31,6 +31,11 @@ themselves on first run.
 * **Fabric Loader 0.16+ and Fabric API.**
 * **Minecraft 26.2 or 26.3** - one jar each, and they are not interchangeable.
   The wrong one refuses to load rather than breaking your game.
+
+**26.2 support ends when the Sift comes out.** Mojang has announced the Sift,
+Minecraft's first new dimension since the End, for Java Edition in 2027. When
+the update that brings it is released, MHRT moves to it and the 26.2 build stops
+getting updates. The last 26.2 jar stays on the Releases page.
 
 ## What it draws
 
@@ -72,8 +77,9 @@ themselves on first run.
 * **The Nether and the End** with their own skies, and the End's flash.
 
 The picture is denoised with a temporal pass and a wavelet filter, then
-temporally upsampled to your display's resolution, and the render scale moves
-itself to hold a steady frame time.
+temporally upsampled to your display's resolution - by MHRT's own upscaler or
+by Apple's MetalFX - and the render scale moves itself to hold a steady frame
+time.
 
 ## What is still Minecraft's
 
@@ -94,6 +100,30 @@ display allows. Two knobs matter most:
   matches what is traced. Setting Minecraft higher costs you frames for terrain
   the tracer is not using.
 
+**Frame generation.** Off, 2x, 3x or 4x. Between two ray-traced frames it shows
+the last traced frame again, moved to where the camera is now - so turning and
+walking are as smooth as your display, while the world itself (mobs, water,
+fire) changes at the traced rate. 2x shows up to one extra frame for each traced
+one, 4x up to three. It adds no delay: the extra frames follow the mouse, and
+the traced frames are moved to the newest camera too. On an M4 Pro at 1080p,
+panning a room went from about 62 frames a second to about 90 at 2x, with each
+extra frame costing about a millisecond of GPU time. It works best with VSync
+on, and it needs *Pipelined frames* (it turns them on).
+
+**Upscaling.** Only part of your display's resolution is ray traced; an
+upscaler builds the full picture from it and the frames before it.
+
+* **Upscaler: MHRT** - the mod's own temporal upscaler, the default. The
+  steadiest picture when you stand still.
+* **Upscaler: MetalFX** - Apple's temporal upscaler. It keeps more detail while
+  you move (at 50% it kept 99% of a native frame's detail while walking, against
+  92% for MHRT's own), but shimmers a little more on leaves and edges when you
+  stand still. It goes no lower than 33%.
+* **Render scale** - AUTO lets the resolution move within the quality preset to
+  hold your frame budget. The fixed steps are NATIVE (100%), ULTRA QUALITY
+  (77%), QUALITY (67%), BALANCED (58%), PERFORMANCE (50%) and ULTRA PERFORMANCE
+  (33%). At 50% a frame traces in about a third of the time of a native one.
+
 **Portals.** Minecraft's loading screen after a portal waits until its own
 renderer has built the ground you arrive on. When MHRT is drawing the whole
 world itself - on 26.3 with its Vulkan graphics backend, which MHRT cannot share
@@ -111,7 +141,8 @@ stuck, and nothing changes.
 **Options > Video Settings**, then scroll to the bottom: under a **Metal ray
 tracing** header there is an **MHRT settings...** button. That opens the panes:
 quality preset, resolution, bounces, denoising, shadows, the colour grade,
-lights, and how many entities are traced a frame.
+lights, how many entities are traced a frame, and **Frame generation and
+upscaling...**
 
 Files beside `options.txt` (they are optional; without them it uses its
 defaults):
