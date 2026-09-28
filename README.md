@@ -6,7 +6,7 @@
 
 **Watch it:** [the MHRT 1.44.0 showcase](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4) - every
 room of the test world, a village, the Nether and an End city, recorded in game on
-an M4 Pro.
+an M4 Pro. The world is available for download in the files above the Readme.
 
 [![The MHRT 1.44.0 showcase on YouTube](https://img.youtube.com/vi/Gu3o0UQ6Z-4/maxresdefault.jpg)](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4)
 
