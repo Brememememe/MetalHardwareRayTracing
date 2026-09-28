@@ -4,6 +4,12 @@
 
 **by Brememememe (Ruchit) YouTube: https://www.youtube.com/@RuchitBreme**
 
+**Watch it:** [the MHRT 1.44.0 showcase](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4) - every
+room of the test world, a village, the Nether and an End city, recorded in game on
+an M4 Pro.
+
+[![The MHRT 1.44.0 showcase on YouTube](https://img.youtube.com/vi/Gu3o0UQ6Z-4/maxresdefault.jpg)](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4)
+
 Real hardware ray tracing for Minecraft Java, written in Metal for Apple
 Silicon. Not a shaderpack: Minecraft's world rasteriser is switched off and the
 world is traced instead, by the GPU's own ray tracing units, and handed back to
@@ -21,6 +27,8 @@ themselves on first run.
     mhrt-1.44.0+26.2.jar   Minecraft 26.2
     mhrt-1.44.0+26.3.jar   Minecraft 26.3
 
+    MHRT-Showcase-26.3.zip  the test world - Minecraft 26.3 only (see below)
+
 ## What you need
 
 * **macOS on Apple Silicon.** Nothing else - there is no Windows or Linux build
@@ -36,6 +44,39 @@ themselves on first run.
 Minecraft's first new dimension since the End, for Java Edition in 2027. When
 the update that brings it is released, MHRT moves to it and the 26.2 build stops
 getting updates. The last 26.2 jar stays on the Releases page.
+
+## Test world
+
+**[MHRT-Showcase-26.3.zip](MHRT-Showcase-26.3.zip)** is the world the showcase
+video was recorded in, and the place to test MHRT. It is here in the repository,
+and from the next release on it is attached to every release as well.
+
+**It is for Minecraft 26.3 only.** It is a 26.3 save: 26.2 cannot open it, so
+test the 26.2 jar in a world of your own.
+
+1. Unzip it into your 26.3 instance's `saves/` folder, so that you have
+   `saves/MHRT Showcase/`.
+2. Start Minecraft with MHRT and open **MHRT Showcase**. You start in the
+   hall, in creative, with cheats on.
+3. Walk the tour. Every room ends at a pressure plate with signs either side
+   saying where it goes; step on it and it takes you to the next room and sets
+   the hour that room was lit for.
+
+Fifteen rooms, each built to show one thing and nothing else: sunlight and
+shadow, soft shadow, colour bleeding off coloured walls, stained glass, water
+(go under it for Snell's window), ice, reflections, twenty kinds of light at
+once, a beacon, lava and fire, a room of mobs, things that move, chests and
+frames and banners, and a garden for foliage and distance. After the garden the
+plates go to a village, a hall in the Nether and a platform in the End, and the
+last plate brings you back to the start.
+
+Use it to test: a new version, a setting, a resource pack, or a bug. If
+something looks wrong, find the room where it shows and say which one in the
+issue - everyone can then see the same thing in the same place.
+
+The zip keeps only the parts of the world the tour uses, so it is small; the
+ground under the rooms and the land round the village are regenerated from the
+world's seed the first time you go near them, and look the same.
 
 ## What it draws
 
@@ -179,7 +220,8 @@ Please open an issue:
 **https://github.com/Brememememe/MetalHardwareRayTracing/issues**
 
 Include your Mac's chip, your Minecraft version, the MHRT version and the lines
-from your log that begin with `[mhrt]`. If the mod hit something it could not
+from your log that begin with `[mhrt]`. On 26.3, if you can show it in the
+[test world](#test-world), say which room. If the mod hit something it could not
 handle it turns itself off and says so in that log rather than leaving you a
 black screen, and that line is usually the whole answer.
 
