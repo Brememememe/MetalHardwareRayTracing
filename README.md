@@ -6,7 +6,7 @@
 
 **Watch it:** [the MHRT 1.44.0 showcase](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4) - every
 room of the test world, a village, the Nether and an End city, recorded in game on
-an M4 Pro. The world is available for download in the files above the Readme.
+an M4 Pro.
 
 [![The MHRT 1.44.0 showcase on YouTube](https://img.youtube.com/vi/Gu3o0UQ6Z-4/maxresdefault.jpg)](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4)
 
@@ -24,8 +24,8 @@ and drop it in your instance's `mods/` folder with Fabric API. That is the whole
 install - the Metal core and the shader ride inside the jar and unpack
 themselves on first run.
 
-    mhrt-1.44.0+26.2.jar   Minecraft 26.2
-    mhrt-1.44.0+26.3.jar   Minecraft 26.3
+    mhrt-1.45.0+26.2.jar   Minecraft 26.2
+    mhrt-1.45.0+26.3.jar   Minecraft 26.3
 
     MHRT-Showcase-26.3.zip  the test world - Minecraft 26.3 only (see below)
 
@@ -49,7 +49,7 @@ getting updates. The last 26.2 jar stays on the Releases page.
 
 **[MHRT-Showcase-26.3.zip](MHRT-Showcase-26.3.zip)** is the world the showcase
 video was recorded in, and the place to test MHRT. It is here in the repository,
-and from the next release on it is attached to every release as well.
+and it is attached to every release as well.
 
 **It is for Minecraft 26.3 only.** It is a 26.3 save: 26.2 cannot open it, so
 test the 26.2 jar in a world of your own.
@@ -177,6 +177,44 @@ the next ten to twenty seconds. Where Minecraft's renderer is still running
 underneath (26.2 or OpenGL with Minecraft effects on), the screen was never
 stuck, and nothing changes.
 
+## The Metal backend (26.3)
+
+On Minecraft 26.3, MHRT also replaces the graphics backend itself. Minecraft
+normally draws through OpenGL or Vulkan, and on a Mac both of those are layers
+over Metal: Apple's OpenGL is built on Metal, and Vulkan goes through MoltenVK
+to Metal. MHRT adds a third backend beside Mojang's two and puts it first, so
+everything Minecraft draws - the menus, text, the world, the window itself -
+goes straight to Metal. Minecraft's own shaders are translated to Metal as the
+game loads them; the picture is the same as OpenGL's, pixel for pixel, in every
+room of the test world.
+
+With VSync off, frames go out MAILBOX style: the game renders as fast as it
+can and the newest finished frame is shown at each refresh of your display.
+(macOS otherwise holds a window to its display's refresh rate even with VSync
+off - that is why Vulkan sat at 75 fps on a 75 Hz screen.)
+
+On an M4 Pro, fullscreen 1920x1080, render distance 16, ray tracing off:
+
+| | OpenGL | Metal |
+|---|---|---|
+| Minecraft | 78 fps | 690 fps |
+| with Sodium 0.9.3 | 277 fps | 876 fps |
+
+With ray tracing on the frame rate is set by the trace, and the two backends
+come out about the same (57 against 53 fps at 75% resolution) - until frame
+generation is on. Then the Metal backend takes each traced frame straight from
+the tracer on the GPU, with no copy through the CPU, and generated frames no
+longer hold the game up: at 34% resolution with 4x frame generation (a
+1600x900 window), 19% more frames on average across five rooms of the test
+world than the CPU copy it replaced.
+
+**Graphics backend** at the bottom of MHRT's settings switches between Metal and
+Minecraft's own choice; it takes a restart. The Metal backend stands aside by
+itself - Minecraft then uses OpenGL or Vulkan as it always has - when Iris is
+installed (Iris drives OpenGL directly and cannot run without it), and after a
+start on Metal that did not get as far as its first frames. Minecraft 26.2 has
+no backend layer to plug into, so there it is OpenGL as before.
+
 ## Settings
 
 **Options > Video Settings**, then scroll to the bottom: under a **Metal ray
@@ -184,6 +222,9 @@ tracing** header there is an **MHRT settings...** button. That opens the panes:
 quality preset, resolution, bounces, denoising, shadows, the colour grade,
 lights, how many entities are traced a frame, and **Frame generation and
 upscaling...**
+
+With Sodium installed, Video Settings opens Sodium's own screen instead: MHRT
+is in its sidebar, **MHRT > Metal ray tracing**.
 
 Files beside `options.txt` (they are optional; without them it uses its
 defaults):
@@ -195,7 +236,11 @@ defaults):
 | `mhrt-nocushions` | cushions only |
 | `mhrt-nomotion` | reproject by the camera alone, as it did before 1.40.0 |
 | `mhrt-noportalpause` | keep ray tracing on through a portal, as it did before 1.43.0 |
-| `Shaders.metal`, `libmhrt.dylib` | override what the jar carries (the jar ships the shader compiled) |
+| `mhrt-noiris` | keep ray tracing on under an Iris shaderpack, as it did before 1.45.0 |
+| `mhrt-nometal` | 26.3: leave the graphics backend to Minecraft (OpenGL or Vulkan), as before 1.45.0 |
+| `mhrt-nochunkswitch` | 26.3: rebuild no chunks when ray tracing is switched on or off, as before 1.45.0 |
+| `mhrt-nohandoff` | 26.3 on the Metal backend: copy each traced frame through the CPU, as before 1.45.0 |
+| `Shaders.metal`, `libmhrt.dylib`, `libmhrtmetal.dylib` | override what the jar carries (the jar ships the shader compiled) |
 
 ## Known limits
 
@@ -209,10 +254,16 @@ defaults):
   and there is no longer any telling which was which.
 * **The traced range is bounded**, because acceleration structures cost memory:
   32 chunks in every direction is over 3 GB.
-* **No shaderpack compatibility.** It replaces the same thing shaderpacks
-  replace.
-* **Not compatible with other renderer mods** that also draw the world
-  (Sodium-likes, Flywheel/Vanillin instancing).
+* **A shaderpack and MHRT take turns.** A shaderpack draws the world itself,
+  so while one is on in Iris, ray tracing steps aside and says so in chat.
+  Turn shaders off (K by default) and it is back a second later; **Ray
+  tracing** in MHRT's settings does both at once. The two never draw at the
+  same time.
+* **Iris keeps Minecraft on OpenGL.** Iris calls OpenGL itself, so with Iris
+  installed the Metal backend stands aside and 26.3 draws through OpenGL.
+* **Sodium works alongside it** (Iris needs Sodium) - tested with Sodium 0.9.1
+  on 26.2 and 0.9.3 on 26.3, on OpenGL and on the Metal backend. Other mods that draw the world themselves
+  (Flywheel/Vanillin instancing and the like) are not supported.
 
 ## Bugs
 
