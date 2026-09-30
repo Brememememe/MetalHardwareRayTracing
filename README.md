@@ -15,6 +15,10 @@ Silicon. Not a shaderpack: Minecraft's world rasteriser is switched off and the
 world is traced instead, by the GPU's own ray tracing units, and handed back to
 Minecraft as a finished frame before it draws everything else on top.
 
+## Access the settings menu
+
+Settings > Video Settings, then scroll all the way down > MHRT Settings > Go ahead and play with the settings. If you dont want to go deep into the settings then i recommend just changing the profile to medium or higher lower than medium looks very bad.
+
 ![the apple, traced by MHRT itself](icon.png)
 
 ## Download
