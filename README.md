@@ -10,7 +10,7 @@ an M4 Pro.
 
 [![The MHRT 1.44.0 showcase on YouTube](https://img.youtube.com/vi/Gu3o0UQ6Z-4/maxresdefault.jpg)](https://www.youtube.com/watch?v=Gu3o0UQ6Z-4)
 
-Real hardware ray tracing for Minecraft Java, written in Metal for Apple
+The first, optimised real hardware ray tracing for Minecraft Java, written in Metal for Apple
 Silicon. Not a shaderpack: Minecraft's world rasteriser is switched off and the
 world is traced instead, by the GPU's own ray tracing units, and handed back to
 Minecraft as a finished frame before it draws everything else on top.
